@@ -11,6 +11,7 @@ use League\Fractal\Pagination\Cursor;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use League\Fractal\Serializer\DataArraySerializer;
+use Illuminate\Support\Str;
 
 abstract class BaseController extends LaravelController
 {
@@ -101,7 +102,7 @@ abstract class BaseController extends LaravelController
         $this->request = $request;
 
         if ($this->request->has('include')) {
-            $this->fractal->parseIncludes(camel_case($this->request->input('include')));
+            $this->fractal->parseIncludes(Str::camel($this->request->input('include')));
         }
     }
 
@@ -480,7 +481,7 @@ abstract class BaseController extends LaravelController
      */
     protected function getEagerLoad()
     {
-        $include = camel_case($this->request->input('include', ''));
+        $include = Str::camel($this->request->input('include', ''));
         $includes = explode(',', $include);
         $includes = array_filter($includes);
 
